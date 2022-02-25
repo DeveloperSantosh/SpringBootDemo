@@ -11,9 +11,6 @@ public class UserDetails {
     private String location;
     private String number;
 
-    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User user;
-
     public UserDetails() {
     }
 
@@ -47,12 +44,5 @@ public class UserDetails {
         this.number = number;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
 }

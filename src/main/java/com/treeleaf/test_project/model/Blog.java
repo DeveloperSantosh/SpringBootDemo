@@ -29,7 +29,6 @@ public class Blog {
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User author;
 
-
     public Blog() {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");

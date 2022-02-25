@@ -1,5 +1,6 @@
 package com.treeleaf.test_project.controller;
 
+import com.treeleaf.test_project.exceptions.CommentNotFoundException;
 import com.treeleaf.test_project.model.Comment;
 import com.treeleaf.test_project.repository.CommentRepository;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class CommentController {
 
     @GetMapping("/comments/{id}")
     Comment getComment(@PathVariable int id){
-        return commentRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        return commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
     }
 
     @PutMapping("/comments/{id}")

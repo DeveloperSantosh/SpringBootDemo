@@ -4,8 +4,6 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "comment")
@@ -17,9 +15,6 @@ public class Comment {
     private String comment;
     @NotNull
     private String createdAt;
-
-    @ManyToMany(targetEntity = Blog.class, cascade = CascadeType.ALL, mappedBy = "comments")
-    private Set<Blog> blogs = new HashSet<>();
 
     public Comment() {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -58,4 +53,5 @@ public class Comment {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
 }

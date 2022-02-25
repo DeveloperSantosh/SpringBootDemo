@@ -1,5 +1,6 @@
 package com.treeleaf.test_project.controller;
 
+import com.treeleaf.test_project.exceptions.BlogNotFoundException;
 import com.treeleaf.test_project.model.Blog;
 import com.treeleaf.test_project.repository.BlogRepository;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class BlogController {
 
     @GetMapping("/blogs/{title}")
     Blog getBlog(@PathVariable String title){
-        return blogRepository.findById(title).orElseThrow(() -> new RuntimeException());
+        return blogRepository.findById(title).orElseThrow(() -> new BlogNotFoundException(title));
     }
 
     @PutMapping("/blogs/{title}")

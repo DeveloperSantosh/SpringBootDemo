@@ -14,7 +14,7 @@ public class User {
     private String name;
     @NotNull
     private String surname;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(targetEntity = UserDetails.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserDetails details;
 
     public User() {
