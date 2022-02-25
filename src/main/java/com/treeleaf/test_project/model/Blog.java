@@ -22,7 +22,7 @@ public class Blog {
 
     @ManyToMany(targetEntity = Comment.class,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "blog_comment",
-            joinColumns = { @JoinColumn(name = "title") },
+            joinColumns = { @JoinColumn(name = "blog_title") },
             inverseJoinColumns = { @JoinColumn(name = "comment_id") })
     private Set<Comment> comments = new HashSet<>();
 

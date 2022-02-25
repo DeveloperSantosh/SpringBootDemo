@@ -14,6 +14,8 @@ public class User {
     private String name;
     @NotNull
     private String surname;
+    @OneToOne(mappedBy = "user")
+    private UserDetails details;
 
     public User() {
     }
@@ -46,5 +48,13 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public UserDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(UserDetails details) {
+        this.details = details;
     }
 }
