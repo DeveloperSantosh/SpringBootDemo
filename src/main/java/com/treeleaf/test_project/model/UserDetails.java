@@ -54,4 +54,5 @@ public class UserDetails {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
