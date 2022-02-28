@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -16,8 +15,8 @@ public class UserDetailsController {
     UserDetailsService userDetailsService;
 
     @GetMapping("/userDetails")
-    public List<UserDetails> getAllInvoices(){
-        return userDetailsService.getAllUserDetails();
+    public ResponseEntity<List<UserDetails>> getAllUserDetails(){
+        return ResponseEntity.ok(userDetailsService.getAllUserDetails());
     }
 
 }
