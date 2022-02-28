@@ -1,8 +1,14 @@
 package com.treeleaf.test_project.model;
 
+import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Table(name = "user_details")
 public class UserDetails {
     @Id
@@ -10,39 +16,6 @@ public class UserDetails {
     private int id;
     private String location;
     private String number;
-
-    public UserDetails() {
-    }
-
-    public UserDetails(int id, String location, String number) {
-        this.id = id;
-        this.location = location;
-        this.number = number;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-
+    private int age;
+    private String gender;
 }
