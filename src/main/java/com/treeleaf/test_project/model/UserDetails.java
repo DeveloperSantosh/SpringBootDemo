@@ -1,16 +1,20 @@
 package com.treeleaf.test_project.model;
 
 import lombok.*;
-import javax.persistence.*;
+import org.springframework.data.redis.core.RedisHash;
 
-@Entity
+import javax.persistence.*;
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@Entity
 @Table(name = "user_details")
-public class UserDetails {
+@RedisHash("user_details")
+public class UserDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

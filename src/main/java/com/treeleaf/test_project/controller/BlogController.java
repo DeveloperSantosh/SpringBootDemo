@@ -32,7 +32,6 @@ public class BlogController {
 
     @PutMapping("/blogs/{title}")
     Blog replaceBlog(@RequestBody Blog newBlog, @PathVariable String title) {
-
         return blogRepository.findById(title)
                 .map(blog -> {
                     blog.setTitle(newBlog.getTitle());

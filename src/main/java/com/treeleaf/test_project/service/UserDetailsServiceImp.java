@@ -3,18 +3,17 @@ package com.treeleaf.test_project.service;
 import com.treeleaf.test_project.exceptions.UserDetailsNotFoundException;
 import com.treeleaf.test_project.model.UserDetails;
 import com.treeleaf.test_project.repository.UserDetailsRepository;
-import com.treeleaf.test_project.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = {"UserDetails"})
 public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
@@ -51,7 +50,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
         return userDetails;
     }
 
-    @Override@Cacheable(value = "UserDetails")
+    @Override
+    @Cacheable(value = "UserDetails")
     public List<UserDetails> getAllUserDetails() {
         return userDetailsRepository.findAll();
     }
