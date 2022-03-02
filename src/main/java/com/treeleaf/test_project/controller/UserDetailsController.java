@@ -1,11 +1,9 @@
 package com.treeleaf.test_project.controller;
 
 import com.treeleaf.test_project.model.UserDetails;
-import com.treeleaf.test_project.repository.UserDetailsRepository;
 import com.treeleaf.test_project.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -14,12 +12,8 @@ public class UserDetailsController {
     @Autowired
     UserDetailsService userDetailsService;
 
-    @Autowired
-    UserDetailsRepository userDetailsRepository;
-
     @GetMapping("/userDetails")
     public List<UserDetails> getAllUserDetails(){
-        System.out.println("From Controller");
         return userDetailsService.getAllUserDetails();
     }
 
@@ -40,7 +34,7 @@ public class UserDetailsController {
 
     @DeleteMapping("/userDetails/{id}")
     public void deleteUserDetails(@PathVariable Integer id){
-        userDetailsService.deleteUserDetails(id);
+        userDetailsService.deleteUserDetailsById(id);
     }
 
 }

@@ -8,7 +8,7 @@ public interface UserDetailsService {
 
     public UserDetails saveUserDetails(UserDetails userDetails);
     public UserDetails updateUserDetails(UserDetails userDetails, Integer userDetailsId);
-    public void deleteUserDetails(Integer userDetailsId);
+    public void deleteUserDetailsById(Integer userDetailsId);
     public UserDetails getUserDetailsById(Integer userDetailsId);
     public List<UserDetails> getAllUserDetails();
 }

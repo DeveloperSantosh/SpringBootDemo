@@ -1,8 +1,6 @@
 package com.treeleaf.test_project.model;
 
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

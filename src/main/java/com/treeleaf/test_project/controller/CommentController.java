@@ -1,49 +1,40 @@
 package com.treeleaf.test_project.controller;
 
-import com.treeleaf.test_project.exceptions.CommentNotFoundException;
 import com.treeleaf.test_project.model.Comment;
-import com.treeleaf.test_project.repository.CommentRepository;
+import com.treeleaf.test_project.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 public class CommentController {
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
-    public CommentController(CommentRepository blogRepository) {
-        this.commentRepository = blogRepository;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
     @GetMapping("/comments")
     List<Comment> all(){
-        return commentRepository.findAll();
+        return commentService.getAllComment();
     }
 
     @PostMapping("/comments")
     Comment addComment(@RequestBody Comment newComment){
-        return commentRepository.save(newComment);
+        return commentService.saveComment(newComment);
     }
 
     @GetMapping("/comments/{id}")
     Comment getComment(@PathVariable int id){
-        return commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
+        return commentService.getCommentById(id);
     }
 
     @PutMapping("/comments/{id}")
     Comment replaceComment(@RequestBody Comment newComment, @PathVariable int id) {
-        return commentRepository.findById(id)
-                .map(comment -> {
-                    comment.setComment(newComment.getComment());
-                    return commentRepository.save(comment);
-                })
-                .orElseGet(() -> {
-                    newComment.setComment_id(id);
-                    return commentRepository.save(newComment);
-                });
+        return commentService.updateComment(newComment, id);
     }
 
     @DeleteMapping("/comments/{id}")
     void deleteBlog(@PathVariable int id) {
-        commentRepository.deleteById(id);
+        commentService.deleteCommentById(id);
     }
 }

@@ -13,8 +13,12 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
 
+    private final UserDetailsRepository userDetailsRepository;
+
     @Autowired
-    private UserDetailsRepository userDetailsRepository;
+    public UserDetailsServiceImp(UserDetailsRepository userDetailsRepository) {
+        this.userDetailsRepository = userDetailsRepository;
+    }
 
     @Override
     public UserDetails saveUserDetails(UserDetails userDetails) {
@@ -24,7 +28,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @CachePut(value="UserDetails", key="#userDetailsId")
     public UserDetails updateUserDetails(UserDetails userDetails, Integer userDetailsId) {
-
         UserDetails userDetails1 = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
         userDetails1.setLocation(userDetails.getLocation());
@@ -34,7 +37,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Override
     @CacheEvict(value = "UserDetails", key = "#userDetailsId")
-    public void deleteUserDetails(Integer userDetailsId) {
+    public void deleteUserDetailsById(Integer userDetailsId) {
         UserDetails userDetails = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
         userDetailsRepository.delete(userDetails);
@@ -43,14 +46,11 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @Cacheable(value = "UserDetails", key = "#userDetailsId")
     public UserDetails getUserDetailsById(Integer userDetailsId) {
-        System.out.println("From Service");
-        UserDetails userDetails = userDetailsRepository.findById(userDetailsId).
+        return userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
-        return userDetails;
     }
 
     @Override
-    @Cacheable(value="UserDetails")
     public List<UserDetails> getAllUserDetails() {
         return userDetailsRepository.findAll();
     }
