@@ -1,8 +1,9 @@
-package com.treeleaf.test_project.service;
+package com.treeleaf.test_project.service.impl;
 
 import com.treeleaf.test_project.exceptions.UserNotFoundException;
 import com.treeleaf.test_project.model.User;
 import com.treeleaf.test_project.repository.UserRepository;
+import com.treeleaf.test_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 

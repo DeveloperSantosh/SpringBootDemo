@@ -1,8 +1,9 @@
-package com.treeleaf.test_project.service;
+package com.treeleaf.test_project.service.impl;
 
 import com.treeleaf.test_project.exceptions.BlogNotFoundException;
 import com.treeleaf.test_project.model.Blog;
 import com.treeleaf.test_project.repository.BlogRepository;
+import com.treeleaf.test_project.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BlogServiceImpl implements BlogService{
+public class BlogServiceImpl implements BlogService {
     private final BlogRepository blogRepository;
 
     @Autowired
@@ -31,7 +32,6 @@ public class BlogServiceImpl implements BlogService{
         Blog oldBlog = blogRepository.findById(blogTitle).orElseThrow(()-> new BlogNotFoundException(blogTitle));
         oldBlog.setComments(blog.getComments());
         oldBlog.setAuthor(blog.getAuthor());
-        oldBlog.setCreatedAt(blog.getCreatedAt());
         oldBlog.setContent(blog.getContent());
         return blogRepository.save(oldBlog);
     }
