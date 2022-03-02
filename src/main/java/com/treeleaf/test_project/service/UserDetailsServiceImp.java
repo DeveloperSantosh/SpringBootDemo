@@ -53,9 +53,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     @Override
-    @Cacheable
+    @Cacheable(value="UserDetails")
     public List<UserDetails> getAllUserDetails() {
-
         return userDetailsRepository.findAll();
     }
 }
