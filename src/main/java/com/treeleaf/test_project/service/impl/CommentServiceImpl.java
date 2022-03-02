@@ -28,16 +28,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @CachePut(value = "Comment",key = "#commentId")
+    @CachePut(value = "CommentCache",key = "#commentId")
     public Comment updateComment(Comment comment, Integer commentId) {
         Comment oldComment = commentRepository.findById(commentId).
                 orElseThrow(()-> new CommentNotFoundException(commentId));
         oldComment.setComment(comment.getComment());
+        oldComment.setComment_id(comment.getComment_id());
+        oldComment.setCreatedAt(comment.getCreatedAt());
         return commentRepository.save(oldComment);
     }
 
     @Override
-    @CacheEvict(value = "Comment", key = "#commentId")
+    @CacheEvict(value = "CommentCache", key = "#commentId")
     public void deleteCommentById(Integer commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()-> new CommentNotFoundException(commentId));
@@ -45,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Cacheable(value = "Comment", key = "#commentId")
+    @Cacheable(value = "CommentCache", key = "#commentId")
     public Comment getCommentById(Integer commentId) {
         return commentRepository.findById(commentId).
                 orElseThrow(()-> new CommentNotFoundException(commentId));

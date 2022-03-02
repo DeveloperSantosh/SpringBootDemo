@@ -31,12 +31,12 @@ public class UserController {
         return userService.getUserById(user_id);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/users/{user_id}")
     User replaceUser(@RequestBody User newUser, @PathVariable int user_id) {
         return userService.updateUser(newUser, user_id);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/users/{user_id}")
     void deleteUser(@PathVariable int user_id) {
         userService.deleteUserById(user_id);
     }

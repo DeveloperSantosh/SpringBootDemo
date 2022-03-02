@@ -27,17 +27,20 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     @Override
-    @CachePut(value="UserDetails", key="#userDetailsId")
+    @CachePut(value="UserDetailsCache", key="#userDetailsId")
     public UserDetails updateUserDetails(UserDetails userDetails, Integer userDetailsId) {
         UserDetails userDetails1 = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
         userDetails1.setLocation(userDetails.getLocation());
         userDetails1.setNumber(userDetails.getNumber());
+        userDetails1.setAge(userDetails.getAge());
+        userDetails1.setGender(userDetails.getGender());
+        userDetails1.setId(userDetails.getId());
         return userDetailsRepository.save(userDetails1);
     }
 
     @Override
-    @CacheEvict(value = "UserDetails", key = "#userDetailsId")
+    @CacheEvict(value = "UserDetailsCache", key = "#userDetailsId")
     public void deleteUserDetailsById(Integer userDetailsId) {
         UserDetails userDetails = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
@@ -45,7 +48,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     @Override
-    @Cacheable(value = "UserDetails", key = "#userDetailsId")
+    @Cacheable(value = "UserDetailsCache", key = "#userDetailsId")
     public UserDetails getUserDetailsById(Integer userDetailsId) {
         return userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));

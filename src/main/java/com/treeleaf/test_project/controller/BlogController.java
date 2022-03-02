@@ -1,6 +1,8 @@
 package com.treeleaf.test_project.controller;
 
 import com.treeleaf.test_project.model.Blog;
+import com.treeleaf.test_project.model.Comment;
+import com.treeleaf.test_project.model.User;
 import com.treeleaf.test_project.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +37,17 @@ public class BlogController {
     }
 
     @DeleteMapping("/blogs/{title}")
-    void deleteBlog(@PathVariable String title) {
-        blogService.deleteBlogByTitle(title);
+    String deleteBlog(@PathVariable String title) {
+        return blogService.deleteBlogByTitle(title);
+    }
+
+    @PutMapping("blogs/addComment/{title}")
+    String addComment(@PathVariable String title, @RequestBody Comment comment){
+        return blogService.addComment(title, comment);
+    }
+
+    @PutMapping("blogs/updateAuthor/{title}")
+    String updateAuthor(@PathVariable String title, @RequestBody User author){
+        return blogService.changeAuthor(title, author);
     }
 }

@@ -2,12 +2,11 @@ package com.treeleaf.test_project.service.impl;
 
 import com.treeleaf.test_project.exceptions.BlogNotFoundException;
 import com.treeleaf.test_project.model.Blog;
+import com.treeleaf.test_project.model.Comment;
+import com.treeleaf.test_project.model.User;
 import com.treeleaf.test_project.repository.BlogRepository;
 import com.treeleaf.test_project.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,29 +21,33 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog saveBlog(Blog userDetails) {
-        return null;
+    public Blog saveBlog(Blog blog) {
+        return blogRepository.save(blog);
     }
 
     @Override
-    @CachePut(value = "Blog",key = "#blogTitle")
     public Blog updateBlog(Blog blog, String blogTitle) {
         Blog oldBlog = blogRepository.findById(blogTitle).orElseThrow(()-> new BlogNotFoundException(blogTitle));
         oldBlog.setComments(blog.getComments());
         oldBlog.setAuthor(blog.getAuthor());
         oldBlog.setContent(blog.getContent());
+        oldBlog.setTitle(blog.getTitle());
         return blogRepository.save(oldBlog);
     }
 
     @Override
-    @CacheEvict(value = "Blog", key = "#blogTitle")
-    public void deleteBlogByTitle(String blogTitle) {
-        Blog blog = blogRepository.findById(blogTitle).orElseThrow(()-> new BlogNotFoundException(blogTitle));
+    public String deleteBlogByTitle(String blogTitle) {
+        Blog blog;
+        try {
+            blog = blogRepository.findById(blogTitle).orElseThrow(() -> new BlogNotFoundException(blogTitle));
+        }catch (BlogNotFoundException ignored){
+            return "Blog Not Found";
+        }
         blogRepository.delete(blog);
+        return "Blog deleted Successfully";
     }
 
     @Override
-    @Cacheable(value = "Blog", key = "#blogTitle")
     public Blog getBlogByTitle(String blogTitle) {
         return blogRepository.findById(blogTitle).orElseThrow(()-> new BlogNotFoundException(blogTitle));
     }
@@ -52,5 +55,32 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getAllBlog() {
         return blogRepository.findAll();
+    }
+
+    @Override
+    public String addComment(String title, Comment comment) {
+        Blog blog;
+        try {
+            blog = blogRepository.findById(title).orElseThrow(()-> new BlogNotFoundException(title));
+        }catch (BlogNotFoundException ignored){
+            return "Sorry Blog not found with Title "+title;
+        }
+        if(blog.getComments().contains(comment))
+            return "Comment Already Exists";
+        blog.addComment(comment);
+        blogRepository.save(blog);
+        return "Comment added Successfully";
+    }
+
+    @Override
+    public String changeAuthor(String title, User author) {
+        Blog blog;
+        try {
+            blog = blogRepository.findById(title).orElseThrow(()->new BlogNotFoundException(title));
+        }catch (BlogNotFoundException ignored){
+            return "Blog not found with Title "+title;
+        }
+        blog.setAuthor(author);
+        return "Blog Author changed Successfully to "+author.toString();
     }
 }

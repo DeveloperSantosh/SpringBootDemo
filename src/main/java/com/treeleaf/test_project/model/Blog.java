@@ -33,6 +33,7 @@ public class Blog implements Serializable {
     @JoinTable(name = "blog_comment",
             joinColumns = { @JoinColumn(name = "blog_title") },
             inverseJoinColumns = { @JoinColumn(name = "comment_id") })
+    @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
@@ -52,4 +53,7 @@ public class Blog implements Serializable {
         this.content = content;
     }
 
+    public void addComment(Comment newComment){
+        comments.add(newComment);
+    }
 }

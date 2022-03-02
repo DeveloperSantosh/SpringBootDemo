@@ -28,24 +28,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CachePut(value="User", key="#userId")
+    @CachePut(value="UserCache", key="#userId")
     public User updateUser(User userDetails, Integer userId) {
         User oldUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
         oldUser.setDetails(userDetails.getDetails());
         oldUser.setSurname(userDetails.getSurname());
         oldUser.setName(userDetails.getName());
+        oldUser.setUser_id(userDetails.getUser_id());
         return userRepository.save(oldUser);
     }
 
     @Override
-    @CacheEvict(value = "User", key = "#userId")
+    @CacheEvict(value = "UserCache", key = "#userId")
     public void deleteUserById(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
         userRepository.delete(user);
     }
 
     @Override
-    @Cacheable(value = "User", key = "#userId")
+    @Cacheable(value = "UserCache", key = "#userId")
     public User getUserById(Integer userId) {
         return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
     }
