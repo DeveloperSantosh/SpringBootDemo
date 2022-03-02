@@ -19,6 +19,7 @@ public class UserDetailsController {
 
     @GetMapping("/userDetails")
     public List<UserDetails> getAllUserDetails(){
+        System.out.println("From Controller");
         return userDetailsService.getAllUserDetails();
     }
 

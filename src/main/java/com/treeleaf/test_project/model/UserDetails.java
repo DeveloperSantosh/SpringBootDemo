@@ -13,7 +13,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "user_details")
-@RedisHash("user_details")
+@RedisHash("UserDetails")
 public class UserDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

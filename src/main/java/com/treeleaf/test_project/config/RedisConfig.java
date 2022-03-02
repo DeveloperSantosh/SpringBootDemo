@@ -1,5 +1,6 @@
 package com.treeleaf.test_project.config;
 
+import com.treeleaf.test_project.model.UserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -20,8 +21,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<Integer, Object> redisTemplate(){
-        RedisTemplate<Integer, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, UserDetails> redisTemplate(){
+        RedisTemplate<String, UserDetails> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());

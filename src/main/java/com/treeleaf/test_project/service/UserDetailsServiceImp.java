@@ -8,12 +8,13 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CacheConfig(cacheNames = {"UserDetails"})
 public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
@@ -27,6 +28,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @CachePut(value="UserDetails", key="#userDetailsId")
     public UserDetails updateUserDetails(UserDetails userDetails, Integer userDetailsId) {
+
         UserDetails userDetails1 = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
         userDetails1.setLocation(userDetails.getLocation());
@@ -51,8 +53,9 @@ public class UserDetailsServiceImp implements UserDetailsService {
     }
 
     @Override
-    @Cacheable(value = "UserDetails")
+    @Cacheable
     public List<UserDetails> getAllUserDetails() {
+
         return userDetailsRepository.findAll();
     }
 }
