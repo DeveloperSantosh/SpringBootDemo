@@ -4,14 +4,10 @@ import com.treeleaf.test_project.exceptions.UserDetailsNotFoundException;
 import com.treeleaf.test_project.model.UserDetails;
 import com.treeleaf.test_project.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,6 +43,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @Cacheable(value = "UserDetails", key = "#userDetailsId")
     public UserDetails getUserDetailsById(Integer userDetailsId) {
+        System.out.println("From Service");
         UserDetails userDetails = userDetailsRepository.findById(userDetailsId).
                 orElseThrow(()-> new UserDetailsNotFoundException(userDetailsId));
         return userDetails;
