@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User userDetails, Integer userId) {
         User oldUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
         oldUser.setDetails(userDetails.getDetails());
-        oldUser.setSurname(userDetails.getSurname());
-        oldUser.setName(userDetails.getName());
+        oldUser.setUsername(userDetails.getUsername());
+        oldUser.setPassword(userDetails.getPassword());
         oldUser.setUser_id(userDetails.getUser_id());
         return userRepository.save(oldUser);
     }

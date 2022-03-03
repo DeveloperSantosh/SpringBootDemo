@@ -17,4 +17,29 @@
             <where >id=1</where>
         </update>
     </changeSet>
+    <changeSet id="3" author="santosh">
+        <mergeColumns tableName="user"
+                      column1Name="name"
+                      column2Name="surname"
+                      joinString=" "
+                      finalColumnName="username"
+                      finalColumnType="VARCHAR(255)"/>
+    </changeSet>
+    <changeSet id="4" author="santosh">
+        <addColumn tableName="user">
+            <column name="password" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="5" author="santosh">
+        <update tableName="user">
+            <column name="password" value="santosh@1234"/>
+            <where>user_id=1</where>
+        </update>
+    </changeSet>
+    <changeSet id="6" author="santosh">
+        <update tableName="user">
+            <column name="password" value="abhaya@1234"/>
+            <where>user_id=2</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

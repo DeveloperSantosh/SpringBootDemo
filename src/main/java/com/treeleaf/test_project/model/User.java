@@ -18,9 +18,9 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int user_id;
     @NotNull
-    private String name;
+    private String username;
     @NotNull
-    private String surname;
+    private String password;
     @OneToOne(targetEntity = UserDetails.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserDetails details;
 
