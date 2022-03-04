@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @CachePut(value="UserCache", key="#userId")
-    public User updateUser(User userDetails, Integer userId) {
+    public User updateUser(User userDetails, Integer userId){
         User oldUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
         oldUser.setDetails(userDetails.getDetails());
         oldUser.setUsername(userDetails.getUsername());
