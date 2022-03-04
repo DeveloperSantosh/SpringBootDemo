@@ -1,9 +1,8 @@
 package com.treeleaf.test_project.controller;
 
 import com.treeleaf.test_project.config.JwtTokenUtil;
-import com.treeleaf.test_project.model.JwtRequest;
+import com.treeleaf.test_project.model.JwtRequestUser;
 import com.treeleaf.test_project.model.JwtResponse;
-import com.treeleaf.test_project.model.UserDto;
 import com.treeleaf.test_project.service.impl.JwtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class HomeController {
     private JwtUserService jwtUserService;
 
     @PostMapping("/")
-    ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
+    ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestUser authenticationRequest) throws Exception{
         try {
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             final UserDetails userDetails = jwtUserService.loadUserByUsername(authenticationRequest.getUsername());

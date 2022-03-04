@@ -1,7 +1,6 @@
 package com.treeleaf.test_project.service.impl;
 
 import com.treeleaf.test_project.model.User;
-import com.treeleaf.test_project.model.UserDto;
 import com.treeleaf.test_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
