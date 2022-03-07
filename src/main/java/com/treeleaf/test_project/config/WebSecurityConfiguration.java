@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+// EnableWebSecurity  allows Spring to find and automatically apply this class to the security of the application
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -41,6 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    AuthenticationManager Interface has one method authenticate which is called to verify the username and password
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

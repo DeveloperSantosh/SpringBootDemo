@@ -5,6 +5,7 @@ import com.treeleaf.test_project.service.UserService;
 import com.treeleaf.test_project.service.impl.JwtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasRole('Admin')")
     List<User> all(){
         return userService.getAllUser();
     }

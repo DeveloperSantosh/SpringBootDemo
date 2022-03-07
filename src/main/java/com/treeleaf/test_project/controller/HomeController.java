@@ -30,15 +30,14 @@ public class HomeController {
     private JwtUserService jwtUserService;
 
     @PostMapping("/")
-    ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestUser authenticationRequest) throws Exception{
+    ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestUser authenticationRequest){
         try {
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             final UserDetails userDetails = jwtUserService.loadUserByUsername(authenticationRequest.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
             return ResponseEntity.ok(new JwtResponse(token));
         }catch (UsernameNotFoundException e){
-            System.out.println("From UsernameNotFoundException");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
         }

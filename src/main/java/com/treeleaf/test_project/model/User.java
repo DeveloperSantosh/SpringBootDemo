@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +24,10 @@ public class User implements Serializable {
     private String password;
     @OneToOne(targetEntity = UserDetails.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserDetails details;
+    @ManyToMany(targetEntity = UserRole.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = {@JoinColumn(name = "role_type")})
+    private Set<UserRole> role;
 
 }

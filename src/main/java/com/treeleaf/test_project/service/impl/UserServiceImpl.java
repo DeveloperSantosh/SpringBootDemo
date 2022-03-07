@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -35,6 +34,7 @@ public class UserServiceImpl implements UserService {
         oldUser.setUsername(userDetails.getUsername());
         oldUser.setPassword(userDetails.getPassword());
         oldUser.setUser_id(userDetails.getUser_id());
+        oldUser.setRole(userDetails.getRole());
         return userRepository.save(oldUser);
     }
 

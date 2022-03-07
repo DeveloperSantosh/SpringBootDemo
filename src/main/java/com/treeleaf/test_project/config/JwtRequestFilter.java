@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+// JWTRequestFilter which will filter out requests that have JWT as header and translate that to something Spring Security can understand using the methods from the Token Provider
+// OncePerRequestFilter meaning it's going to look for the JWT token in every single request and update the SecurityContext
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired

@@ -8,7 +8,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "user_details")
 public class UserDetails implements Serializable {
@@ -19,4 +18,5 @@ public class UserDetails implements Serializable {
     private String number;
     private int age;
     private String gender;
+
 }

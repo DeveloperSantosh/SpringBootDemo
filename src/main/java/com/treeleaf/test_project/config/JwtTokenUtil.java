@@ -17,6 +17,7 @@ public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
 
+    @Value("${jwt.token.validity}")
     public static final long JWT_TOKEN_VALIDITY = 5*60*60;
 
     @Value("${jwt.secret}")
@@ -40,7 +41,10 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -52,7 +56,7 @@ public class JwtTokenUtil implements Serializable {
         // here you specify tokens, for that the expiration is ignored
         return false;
     }
-
+//  generateToken method builds and signs the JWT Token that we will pass along to the user as soon as they authenticate
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
@@ -71,7 +75,7 @@ public class JwtTokenUtil implements Serializable {
     public Boolean canTokenBeRefreshed(String token) {
         return (!isTokenExpired(token) || ignoreTokenExpiration(token));
     }
-
+//    validateToken basically checks if the username on the token payload matches the UserDetails and checks if the token has expired
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
